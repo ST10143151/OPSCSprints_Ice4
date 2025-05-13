@@ -1,9 +1,9 @@
-package com.fake.loginregistration
+package com.fake.opscsprints
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.fake.loginregistration.databinding.ItemCommentBinding
+import com.fake.opscsprints.databinding.ItemCommentBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

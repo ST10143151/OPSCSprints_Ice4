@@ -1,4 +1,4 @@
-package com.fake.loginregistration
+package com.fake.opscsprints
 
 data class Comment(
     val id: String = "",

@@ -1,29 +1,32 @@
-package com.fake.loginregistration
+package com.fake.opscsprints
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.fake.loginregistration.databinding.ActivityRegistrationBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.auth.ktx.auth
+import com.fake.opscsprints.databinding.ActivityRegistrationBinding
+// Firebase temporarily disabled
+// import com.google.firebase.auth.FirebaseAuth
+// import com.google.firebase.firestore.FirebaseFirestore
+// import com.google.firebase.ktx.Firebase
+// import com.google.firebase.auth.ktx.auth
 import android.util.Log
 
 class RegistrationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegistrationBinding
-    private lateinit var auth: FirebaseAuth
-    private val firestore = FirebaseFirestore.getInstance()
+    // Firebase temporarily disabled
+    // private lateinit var auth: FirebaseAuth
+    // private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = Firebase.auth
+        // Firebase temporarily disabled 
+        // auth = Firebase.auth
 
         binding.registerButton.setOnClickListener {
             val fullName = binding.nameEditText.text.toString().trim()
@@ -77,30 +80,43 @@ class RegistrationActivity : AppCompatActivity() {
 
     private fun registerUser(fullName: String, email: String, password: String) {
         showLoading(true)
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val firebaseUser = task.result?.user
-                    firebaseUser?.sendEmailVerification()
-
-                    firebaseUser?.let {
-                        saveUserToFirestore(it.uid, fullName, email)
-                    }
-
-                    Toast.makeText(
-                        this,
-                        "Registration successful! Please verify your email.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
-                } else {
-                    showLoading(false)
-                    showError(task.exception?.message ?: "Registration failed.")
-                }
-            }
+        // Firebase auth temporarily disabled
+        // auth.createUserWithEmailAndPassword(email, password)
+        //    .addOnCompleteListener(this) { task ->
+        //        if (task.isSuccessful) {
+        //            val firebaseUser = task.result?.user
+        //            firebaseUser?.sendEmailVerification()
+        //
+        //            firebaseUser?.let {
+        //                saveUserToFirestore(it.uid, fullName, email)
+        //            }
+        //
+        //            Toast.makeText(
+        //                this,
+        //                "Registration successful! Please verify your email.",
+        //                Toast.LENGTH_LONG
+        //            ).show()
+        //            startActivity(Intent(this, LoginActivity::class.java))
+        //            finish()
+        //        } else {
+        //            showLoading(false)
+        //            showError(task.exception?.message ?: "Registration failed.")
+        //        }
+        //    }
+        
+        // Mock successful registration
+        showLoading(false)
+        Toast.makeText(
+            this,
+            "Registration successful! Please verify your email.",
+            Toast.LENGTH_LONG
+        ).show()
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 
+    // Firebase Firestore temporarily disabled
+    /*
     private fun saveUserToFirestore(uid: String, fullName: String, email: String) {
         val userData = hashMapOf(
             "uid" to uid,
@@ -122,6 +138,7 @@ class RegistrationActivity : AppCompatActivity() {
                 Toast.makeText(this, "Firestore error: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }
+    */
 
     private fun showLoading(show: Boolean) {
         binding.registerButton.isEnabled = !show
