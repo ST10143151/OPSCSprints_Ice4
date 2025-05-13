@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         setupOperationButtons()
         setupBottomNavigation()
         setupFloatingActionButton()
+        setupBackPressHandler()
         
         // Simple placeholder toast to show the app is working
         Toast.makeText(this, "App started successfully", Toast.LENGTH_LONG).show()
@@ -39,7 +41,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupDrawer() {
         toggle = ActionBarDrawerToggle(
             this, 
-            binding.drawerLayout, 
+            binding.drawerLayout,
+            binding.toolbar,
             R.string.navigation_drawer_open, 
             R.string.navigation_drawer_close
         )
@@ -68,16 +71,24 @@ class MainActivity : AppCompatActivity() {
     }
     
     private fun setupOperationButtons() {
-        binding.addButton.setOnClickListener { performOperation("+") }
-        binding.subtractButton.setOnClickListener { performOperation("-") }
-        binding.multiplyButton.setOnClickListener { performOperation("×") }
-        binding.divideButton.setOnClickListener { performOperation("÷") }
+        binding.addButton?.setOnClickListener { performOperation("+") }
+        binding.subtractButton?.setOnClickListener { performOperation("-") }
+        binding.multiplyButton?.setOnClickListener { performOperation("×") }
+        binding.divideButton?.setOnClickListener { performOperation("÷") }
     }
     
     private fun performOperation(operator: String) {
         try {
-            val num1 = binding.editTextText2.text.toString().toDouble()
-            val num2 = binding.editTextText3.text.toString().toDouble()
+            val num1Text = binding.editTextText2?.text?.toString() ?: ""
+            val num2Text = binding.editTextText3?.text?.toString() ?: ""
+            
+            if (num1Text.isEmpty() || num2Text.isEmpty()) {
+                Toast.makeText(this, "Please enter both numbers", Toast.LENGTH_SHORT).show()
+                return
+            }
+            
+            val num1 = num1Text.toDouble()
+            val num2 = num2Text.toDouble()
             val result = when (operator) {
                 "+" -> num1 + num2
                 "-" -> num1 - num2
@@ -92,15 +103,15 @@ class MainActivity : AppCompatActivity() {
                 else -> 0.0
             }
             
-            binding.resultTextView.text = result.toString()
-            binding.historyTextView.text = "Last operation: $num1 $operator $num2 = $result"
+            binding.resultTextView?.text = result.toString()
+            binding.historyTextView?.text = "Last operation: $num1 $operator $num2 = $result"
         } catch (e: Exception) {
             Toast.makeText(this, "Please enter valid numbers", Toast.LENGTH_SHORT).show()
         }
     }
     
     private fun setupBottomNavigation() {
-        binding.bottomNav.setOnItemSelectedListener { item ->
+        binding.bottomNav?.setOnItemSelectedListener { item ->
             var fragment: Fragment? = null
             
             when (item.itemId) {
@@ -118,7 +129,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             
-            if (fragment != null) {
+            if (fragment != null && binding.fragmentContainer != null) {
                 supportFragmentManager.beginTransaction()
                     .replace(binding.fragmentContainer.id, fragment)
                     .commit()
@@ -129,11 +140,11 @@ class MainActivity : AppCompatActivity() {
         }
         
         // Set default fragment
-        binding.bottomNav.selectedItemId = R.id.nav_feed
+        binding.bottomNav?.selectedItemId = R.id.nav_feed
     }
     
     private fun setupFloatingActionButton() {
-        binding.fab.setOnClickListener {
+        binding.fab?.setOnClickListener {
             startActivity(Intent(this, PostActivity::class.java))
         }
     }
@@ -145,11 +156,18 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
     
-    override fun onBackPressed() {
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
+    private fun setupBackPressHandler() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
+                    binding.drawerLayout?.closeDrawer(GravityCompat.START)
+                } else {
+                    if (isEnabled) {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+            }
+        })
     }
 }
