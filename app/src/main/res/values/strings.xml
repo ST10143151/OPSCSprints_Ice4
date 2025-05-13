@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App General -->
+    <string name="app_name">LoginRegistration</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_image_desc">Profile Image</string>
+    <string name="username_placeholder">User Name</string>
+    <string name="bio_placeholder">Short bio goes here. This is a sample bio text.</string>
+    <string name="full_name_placeholder">John Doe</string>
+    <string name="email_placeholder">johndoe@example.com</string>
+    <string name="phone_placeholder">+1 (234) 567-8900</string>
+
+    <!-- Registration Screen -->
+    <string name="back_button_desc">Navigate back to previous screen</string>
+    <string name="screen_title_registration">Registration</string>
+    <string name="hint_full_name">Full Name</string>
+    <string name="hint_email">Email Address</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="button_register">Register</string>
+
+    <!-- Missing strings from activity_login.xml -->
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="no_account_prompt">Dont have an account?</string>
+    <string name="register_here">Register here</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Missing strings from activity_registration.xml -->
+    <string name="register">Register</string>
+    <string name="full_name">Full Name</string>
+    <string name="confirm_password">Confirm Password</string>
+</resources>

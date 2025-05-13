@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "48361515077",
+    "project_id": "opsesprints",
+    "storage_bucket": "opsesprints.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48361515077:android:a747e4d65f594d269e9b2c",
+        "android_client_info": {
+          "package_name": "com.fake.opscsprints"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6nTVjgSkCzK7tGOpd757Yc_wCa3eTZmM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
